@@ -6,152 +6,250 @@
   <title>Kenya 2027 Election Countdown</title>
   <meta name="description" content="Countdown to the 2027 Kenyan General Election" />
   <style>
-    :root {
-      --bg-1: #0d2d1f;
-      --bg-2: #174b34;
-      --panel: rgba(255,255,255,0.08);
-      --panel-border: rgba(255,255,255,0.16);
-      --text: #f5f7f6;
-      --muted: rgba(255,255,255,0.8);
-      --accent: #f4d35e;
-    }
-
-    * { box-sizing: border-box; }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
-      margin: 0;
-      min-height: 100%;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
-      color: var(--text);
+      height: 100%;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0d2d1f 0%, #174b34 45%, #081b12 100%);
+      color: #f5f7f6;
+      overflow-x: hidden;
     }
 
     body {
       min-height: 100vh;
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 24px;
+      position: relative;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(8px);
+      opacity: 0.12;
+      animation: drift 14s ease-in-out infinite alternate;
+    }
+    .orb.one {
+      width: 420px; height: 420px; right: -80px; top: -90px;
+      background: radial-gradient(circle, #f4d35e, transparent 60%);
+    }
+    .orb.two {
+      width: 360px; height: 360px; left: -70px; bottom: -90px;
+      background: radial-gradient(circle, #0ae0aa, transparent 60%);
+      animation-delay: 1.5s;
+    }
+
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30px, 30px) scale(1.08); }
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      width: min(820px, 100%);
     }
 
     .card {
-      width: min(720px, 100%);
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      border-radius: 20px;
-      padding: 36px 28px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 24px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.35);
+      backdrop-filter: blur(12px);
+      padding: 46px 30px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 42px;
+    }
+
+    .flag {
+      display: inline-block;
+      font-size: 3rem;
+      margin-bottom: 14px;
+      animation: bounce 2.2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     .eyebrow {
-      text-align: center;
-      font-size: 0.8rem;
+      font-size: 0.76rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 12px;
+      color: #67f3d0;
+      font-weight: 700;
+      margin-bottom: 14px;
     }
 
     h1 {
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      line-height: 1.08;
       margin: 0;
-      text-align: center;
-      font-size: clamp(2rem, 5vw, 3rem);
-      line-height: 1.1;
+      font-weight: 900;
+      background: linear-gradient(135deg, #f6df82 0%, #d9f7ef 45%, #7ae7c8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .subtitle {
-      margin: 12px auto 28px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 1rem;
-      max-width: 550px;
+      margin: 18px auto 0;
+      max-width: 560px;
+      color: rgba(255,255,255,0.8);
+      font-size: 1.08rem;
+      line-height: 1.7;
     }
 
     .countdown {
       display: grid;
-      grid-template-columns: repeat(4, minmax(90px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
+      grid-template-columns: repeat(4, minmax(110px, 1fr));
+      gap: 18px;
+      margin-top: 42px;
       margin-bottom: 18px;
     }
 
     .unit {
       background: rgba(255,255,255,0.04);
-      border: 1px solid var(--panel-border);
-      border-radius: 14px;
-      padding: 18px 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 20px 12px;
       text-align: center;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .unit:hover {
+      transform: translateY(-6px);
+      border-color: rgba(246, 223, 130, 0.7);
     }
 
     .number {
-      font-size: clamp(2rem, 4vw, 3.2rem);
+      display: block;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
       font-weight: 800;
       line-height: 1;
-      display: block;
-      color: var(--accent);
+      color: #f4d35e;
+      font-variant-numeric: tabular-nums;
     }
 
     .label {
-      margin-top: 10px;
       display: block;
-      font-size: 0.72rem;
+      margin-top: 12px;
+      font-size: 0.73rem;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: rgba(255,255,255,0.7);
+    }
+
+    .date-wrap {
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .date-label {
+      color: #67f3d0;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
 
     .date {
-      text-align: center;
-      font-size: 1.05rem;
-      color: var(--muted);
-      margin-top: 18px;
-      margin-bottom: 10px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #f4d35e;
     }
 
     .tags {
+      margin-top: 25px;
       text-align: center;
-      margin-top: 12px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--text);
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
 
-    @media (max-width: 520px) {
+    .tag {
+      display: inline-block;
+      margin: 4px 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(244, 211, 94, 0.1);
+      border: 1px solid rgba(244, 211, 94, 0.25);
+      color: #f4d35e;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 560px) {
+      .card { padding: 30px 18px; }
       .countdown {
-        grid-template-columns: repeat(2, minmax(120px, 1fr));
+        grid-template-columns: repeat(2, minmax(110px, 1fr));
       }
+      .date { font-size: 1.02rem; }
     }
   </style>
 </head>
 <body>
-  <main class="card">
-    <div class="eyebrow">Kenya</div>
-    <h1>General Election Countdown</h1>
-    <p class="subtitle">
-      Tracking the time remaining until the 2027 Kenyan General Election.
-    </p>
+  <div class="bg">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+  </div>
 
-    <div class="countdown" aria-label="Countdown to the 2027 Kenyan election">
-      <div class="unit">
-        <span id="days" class="number">00</span>
-        <span class="label">Days</span>
+  <main>
+    <div class="card">
+      <div class="header">
+        <div class="flag">🇰🇪</div>
+        <div class="eyebrow">Kenya</div>
+        <h1>General Election Countdown</h1>
+        <p class="subtitle">
+          Tracking the time remaining until the 2027 Kenyan General Election.
+        </p>
       </div>
-      <div class="unit">
-        <span id="hours" class="number">00</span>
-        <span class="label">Hours</span>
+
+      <div class="countdown" aria-label="Countdown to the 2027 Kenyan election">
+        <div class="unit">
+          <span id="days" class="number">00</span>
+          <span class="label">Days</span>
+        </div>
+        <div class="unit">
+          <span id="hours" class="number">00</span>
+          <span class="label">Hours</span>
+        </div>
+        <div class="unit">
+          <span id="minutes" class="number">00</span>
+          <span class="label">Minutes</span>
+        </div>
+        <div class="unit">
+          <span id="seconds" class="number">00</span>
+          <span class="label">Seconds</span>
+        </div>
       </div>
-      <div class="unit">
-        <span id="minutes" class="number">00</span>
-        <span class="label">Minutes</span>
+
+      <div class="date-wrap">
+        <div class="date-label">Election Day</div>
+        <div class="date">Tuesday, 10 August 2027</div>
       </div>
-      <div class="unit">
-        <span id="seconds" class="number">00</span>
-        <span class="label">Seconds</span>
+
+      <div class="tags">
+        <span class="tag">#Kenya2027</span>
+        <span class="tag">#Election2027</span>
+        <span class="tag">#KenyaVotes</span>
       </div>
     </div>
-
-    <div class="date">Tuesday, 10 August 2027</div>
-    <div class="tags">#Kenya2027 #Election2027 #KenyaVotes</div>
   </main>
 
   <script>
