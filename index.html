@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kenya 2027 Election Countdown</title>
+  <meta name="description" content="Countdown to the 2027 Kenyan General Election" />
+  <style>
+    :root {
+      --bg-1: #0d2d1f;
+      --bg-2: #174b34;
+      --panel: rgba(255,255,255,0.08);
+      --panel-border: rgba(255,255,255,0.16);
+      --text: #f5f7f6;
+      --muted: rgba(255,255,255,0.8);
+      --accent: #f4d35e;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 100%);
+      color: var(--text);
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: min(720px, 100%);
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      backdrop-filter: blur(8px);
+    }
+
+    .eyebrow {
+      text-align: center;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      margin: 12px auto 28px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 550px;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(90px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+      margin-bottom: 18px;
+    }
+
+    .unit {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      padding: 18px 10px;
+      text-align: center;
+    }
+
+    .number {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1;
+      display: block;
+      color: var(--accent);
+    }
+
+    .label {
+      margin-top: 10px;
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .date {
+      text-align: center;
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-top: 18px;
+      margin-bottom: 10px;
+    }
+
+    .tags {
+      text-align: center;
+      margin-top: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    @media (max-width: 520px) {
+      .countdown {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="eyebrow">Kenya</div>
+    <h1>General Election Countdown</h1>
+    <p class="subtitle">
+      Tracking the time remaining until the 2027 Kenyan General Election.
+    </p>
+
+    <div class="countdown" aria-label="Countdown to the 2027 Kenyan election">
+      <div class="unit">
+        <span id="days" class="number">00</span>
+        <span class="label">Days</span>
+      </div>
+      <div class="unit">
+        <span id="hours" class="number">00</span>
+        <span class="label">Hours</span>
+      </div>
+      <div class="unit">
+        <span id="minutes" class="number">00</span>
+        <span class="label">Minutes</span>
+      </div>
+      <div class="unit">
+        <span id="seconds" class="number">00</span>
+        <span class="label">Seconds</span>
+      </div>
+    </div>
+
+    <div class="date">Tuesday, 10 August 2027</div>
+    <div class="tags">#Kenya2027 #Election2027 #KenyaVotes</div>
+  </main>
+
+  <script>
+    const electionDate = new Date("2027-08-10T00:00:00Z");
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = electionDate.getTime() - now.getTime();
+
+      if (diff <= 0) {
+        document.getElementById("days").textContent = "00";
+        document.getElementById("hours").textContent = "00";
+        document.getElementById("minutes").textContent = "00";
+        document.getElementById("seconds").textContent = "00";
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      document.getElementById("days").textContent = String(days).padStart(2, "0");
+      document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+      document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
